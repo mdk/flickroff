@@ -27,14 +27,22 @@ import Gtk
 
 class SyncErrorDialog (MessageDialog):
 
-  def constructor (window):
+  def constructor (window, exception as Exception):
 
     # FIXME Move to static class part
     msg = ("An error occured during the sync process. " +
            "A very likely cause of that is a network access problem. " +
            "Please check your connectivity settings and status.")
 
-    Console.WriteLine (msg)
     super (window, DialogFlags.Modal, MessageType.Error,
            ButtonsType.Ok, false, msg)
+
+    # Add an expander with some more information
+    error = Label (exception.StackTrace)
+    exp = Expander ("<b>Error details</b>")
+    exp.UseMarkup = true
+    exp.Add (error)
+    exp.Show ()
+
+    VBox.PackEnd (exp)
 

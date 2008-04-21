@@ -149,7 +149,8 @@ class Window (Gtk.Window):
     print e
     try:
       Gdk.Threads.Enter ()
-      dialog = SyncErrorDialog (self)
+      dialog = SyncErrorDialog (self, e)
+      dialog.ShowAll ()
       dialog.Run ()
       dialog.Destroy ()
     ensure:
