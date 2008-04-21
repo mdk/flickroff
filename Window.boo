@@ -98,6 +98,7 @@ class Window (Gtk.Window):
     
     Add (vbox)
     SyncEngine.Error += OnSyncError
+    SyncEngine.Finished += OnSyncFinished
 
   private def UpdatePhotoCount ():
     _photoCountLabel.Text = Database.GetPhotoCount ().ToString ()
@@ -118,7 +119,7 @@ class Window (Gtk.Window):
     SyncEngine.StartSync ()
 
   private def OnAbortClicked ():
-    HideProgressBar ()
+    _abortButton.Sensitive = false;
 
   private def ShowProgressBar ():
     _progressBar.Show ()
@@ -133,6 +134,15 @@ class Window (Gtk.Window):
     _buttonBox.Remove (_abortButton)
     _buttonBox.PackEnd (_syncButton, false, false, 0)
     _syncButton.Show ()
+
+  private def OnSyncFinished ():
+    try:
+      Gdk.Threads.Enter ()
+      _syncButton.Sensitive = true;
+      _abortButton.Sensitive = true;
+      HideProgressBar ();
+    ensure:
+      Gdk.Threads.Leave ()
 
   private def OnSyncError (o, e as Exception):
     print e
