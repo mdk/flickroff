@@ -97,7 +97,6 @@ class DownloadItem ():
       request = WebRequest.Create (_url)
       request.Timeout = 10000
       inputStream = request.GetResponse ().GetResponseStream ()
-      inputStream.ReadTimeout = 10000
       outputStream = File.Create (FullPath)
       buf = array (byte, 2048)
       c = 0
