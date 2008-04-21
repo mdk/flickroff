@@ -120,6 +120,7 @@ class Window (Gtk.Window):
 
   private def OnAbortClicked ():
     _abortButton.Sensitive = false;
+    SyncEngine.Abort ()
 
   private def ShowProgressBar ():
     _progressBar.Show ()

@@ -58,6 +58,10 @@ static class SyncEngine ():
     _status = SyncStatus.InProgress
     _mainThread.Start ()
 
+  def Abort ():
+    lock _locker:
+      _status = SyncStatus.Aborting if _status == SyncStatus.InProgress
+
   private def ProcessPhotosetQueue ():
     threads = []
     try:
