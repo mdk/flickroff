@@ -45,6 +45,7 @@ static class SyncEngine ():
 
   event Success as EventHandler
   event Error as ErrorHandler
+  event Finished as EventHandler
   
   callable ErrorHandler (caller as object, exception as Exception)
 
@@ -144,6 +145,7 @@ static class SyncEngine ():
       _photoSetQueue = null
       _itemsQueue = null
       _itemsList = null
+      Finished (null, null)
 
     lock _locker:
       _status = SyncStatus.Stopped
