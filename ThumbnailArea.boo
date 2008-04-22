@@ -49,6 +49,14 @@ class ThumbnailArea (DrawingArea):
     _pixbufQueue = Queue ()
     _logoOn = true
 
+  def ResetToLogo ():
+    _surfaceA = null
+    _surfaceB = null
+    _pixbufQueue = Queue ()
+    _logoOn = true
+    EnsureTimeoutRemoved ()
+    QueueDraw ()
+
   private def OnThumbnailUpdated (caller, thumbnail as Gdk.Pixbuf):
     try:
       Gdk.Threads.Enter ()

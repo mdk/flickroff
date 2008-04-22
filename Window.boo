@@ -35,6 +35,7 @@ class Window (Gtk.Window):
   _abortButton as Button
   _buttonBox as HBox
   _photoCountLabel as Label
+  _thumbnailArea as ThumbnailArea
 
   def constructor ():
     super ("Flickroff")
@@ -46,8 +47,8 @@ class Window (Gtk.Window):
     leftVBox = VBox (false, 6)
     vbox = VBox (false, 6)
 
-    image = ThumbnailArea ()
-    leftVBox.PackStart (image, false, false, 0)
+    _thumbnailArea = ThumbnailArea ()
+    leftVBox.PackStart (_thumbnailArea, false, false, 0)
 
     syncTimeCaption = Label ("Last synchronization:")
     syncTimeLabel = Label ("Never")
@@ -142,6 +143,7 @@ class Window (Gtk.Window):
       _syncButton.Sensitive = true;
       _abortButton.Sensitive = true;
       HideProgressBar ();
+      _thumbnailArea.ResetToLogo ()
     ensure:
       Gdk.Threads.Leave ()
 
