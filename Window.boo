@@ -118,6 +118,7 @@ class Window (Gtk.Window):
     
     ShowProgressBar ()
     SyncEngine.StartSync ()
+    _directoryChooser.Sensitive = false
 
   private def OnAbortClicked ():
     _abortButton.Sensitive = false;
@@ -142,6 +143,7 @@ class Window (Gtk.Window):
       Gdk.Threads.Enter ()
       _syncButton.Sensitive = true;
       _abortButton.Sensitive = true;
+      _directoryChooser.Sensitive = true;
       HideProgressBar ();
       _thumbnailArea.ResetToLogo ()
     ensure:
