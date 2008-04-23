@@ -38,3 +38,6 @@ class DirectoryChooserButton (Gtk.FileChooserButton):
 
     SetCurrentFolder (Config.PhotosDirectory)
 
+  protected def OnCurrentFolderChanged ():
+    Config.PhotosDirectory = CurrentFolder
+
