@@ -30,7 +30,7 @@ class Window (Gtk.Window):
   _table as Table
   _progressBar as ProgressBar
   _directoryCaption as Label
-  _directoryChooser as FileChooserButton
+  _directoryChooser as DirectoryChooserButton
   _syncButton as Button
   _abortButton as Button
   _buttonBox as HBox
@@ -53,7 +53,7 @@ class Window (Gtk.Window):
     syncTimeCaption = Label ("Last synchronization:")
     syncTimeLabel = Label ("Never")
     _directoryCaption = Label ("Photos location:")
-    _directoryChooser = FileChooserButton ("Pick a photos directory", FileChooserAction.SelectFolder)
+    _directoryChooser = DirectoryChooserButton ()
     photoCountCaption = Label ("Photo count:")
     _photoCountLabel = Label ("123")
 
