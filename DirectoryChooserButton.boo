@@ -31,3 +31,10 @@ class DirectoryChooserButton (Gtk.FileChooserButton):
     super (null)
     Action = FileChooserAction.SelectFolder
 
+    # By default set to config and create if not present
+    if not System.IO.Directory.Exists (Config.PhotosDirectory):
+      # FIXME Log something here through Messenger?
+      System.IO.Directory.CreateDirectory (Config.PhotosDirectory)
+
+    SetCurrentFolder (Config.PhotosDirectory)
+
