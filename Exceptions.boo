@@ -27,6 +27,12 @@ import System
 class IncompatibleDatabaseException (Exception):
 
   def constructor (version):
-    str = String.Format ("Database version {0} is not compatible!", version)
-    super (str)
+    msg = String.Format ("Database version {0} is not compatible!", version)
+    super (msg)
+
+
+class ReplaceMeException (Exception):
+
+  def constructor (msg):
+    super (msg)
 
