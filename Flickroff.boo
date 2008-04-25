@@ -25,7 +25,6 @@ namespace Flickroff
 import System
 import Gtk
 
-#GLib.Thread.Init ()
 Gdk.Threads.Init ()
 Application.Init ()
 Messenger.Init ()
@@ -34,16 +33,7 @@ Database.Initialize ()
 FlickrStore.Initialize ()
 SyncEngine.Init ()
 
-#if not FlickrStore.HasToken:
-#  frob = FlickrStore.GetFrob ()
-#  print "Go to:", FlickrStore.GetUrlForFrob (frob)
-#  Console.ReadLine ()
-#  FlickrStore.GetTokenForFrob (frob)
-
 window = Flickroff.Window ()
 window.Show ()
 
 Application.Run ()
-
-#print "Will download:"
-#SyncEngine.PerformFullSync ()
