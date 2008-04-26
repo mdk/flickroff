@@ -117,7 +117,7 @@ class Window (Gtk.Window):
       FlickrStore.GetTokenForFrob (authorizeDialog.Frob)
     
     ShowProgressBar ()
-    SyncEngine.StartSync ()
+    SyncEngine.StartSync (false)
     _directoryChooser.Sensitive = false
 
   private def OnAbortClicked ():

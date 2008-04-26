@@ -75,6 +75,7 @@ static class Database ():
     if not System.IO.Directory.Exists (newDir):
       raise ReplaceMeException ("Can't find target directory")
 
+    # FIXME Don't enforce sync here
     SyncToStorage ()
     currentPhotosDir = Config.PhotosDirectory
     cmd = _connection.CreateCommand ()

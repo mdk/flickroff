@@ -42,6 +42,7 @@ static class SyncEngine ():
   _itemsList as List
   _workerException as Exception
   _status as SyncStatus
+  _moveToNewLocation as bool
 
   event Success as EventHandler
   event Error as ErrorHandler
@@ -53,9 +54,10 @@ static class SyncEngine ():
     _locker = Object ()
     _status = SyncStatus.Stopped
 
-  def StartSync ():
+  def StartSync (move):
     _mainThread = Thread (SyncThreadStart)
     _status = SyncStatus.InProgress
+    _moveToNewLocation = move
     _mainThread.Start ()
 
   def Abort ():
@@ -140,6 +142,8 @@ static class SyncEngine ():
 
       # Check out our database
       Database.SyncToStorage ()
+      lock _locker:
+        Database.MovePhotosToNewLocation (Config.PhotosDirectory) if _moveToNewLocation
 
       # We can safely set the old sync dir here
       Config.PreviousPhotosDirectory = Config.PhotosDirectory
