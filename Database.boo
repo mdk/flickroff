@@ -45,7 +45,7 @@ static class Database ():
 
     Messenger.PushMessage ("Looking at downloaded photos...")
 
-    currentPhotosDir = Config.PhotosDirectory
+    currentPhotosDir = Config.PreviousPhotosDirectory
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos ")
 
@@ -71,15 +71,13 @@ static class Database ():
         cmd.ExecuteNonQuery ()
 
   def MovePhotosToNewLocation (newDir):
-    Messenger.PushMessage ("Moving photo files to new location...")
+    Messenger.PushMessage ("Moving photo files to a new location...")
 
     # FIXME Need some error handling in this function
     if not System.IO.Directory.Exists (newDir):
       raise ReplaceMeException ("Can't find target directory")
 
-    # FIXME Don't enforce sync here
-    SyncToStorage ()
-    currentPhotosDir = Config.PhotosDirectory
+    currentPhotosDir = Config.PreviousPhotosDirectory
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos ")
 
