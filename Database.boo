@@ -40,12 +40,9 @@ static class Database ():
     _connection.Open ()
     CreateTables () if not CheckDatabaseVersion ()
 
-  def MovePhotosToNewLocation (newDir):
-    # FIXME Need some error handling in this function
-    if not System.IO.Directory.Exists (newDir):
-      raise ReplaceMeException ("Can't find target directory")
-
+  def SyncToStorage ():
     removalList = []
+
     currentPhotosDir = Config.PhotosDirectory
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos ")
@@ -55,18 +52,9 @@ static class Database ():
 
       # For each photo in the db...
       while reader.Read ():
-        oldPhotoPath = Path.Combine (currentPhotosDir, reader [3])
-        newPhotoPath = Path.Combine (newDir, reader [3])
-
-        if System.IO.File.Exists (oldPhotoPath):
-          # If photo exists on the disk, move it
-          subDir = System.IO.Path.GetDirectoryName (newPhotoPath)
-          System.IO.Directory.CreateDirectory (subDir) if not System.IO.Directory.Exists (subDir)
-          System.IO.File.Copy (oldPhotoPath, newPhotoPath, true)
-        else:
-          # Otherwise delete the entry from the database (add to remove list)
-          removalList.Add (reader [0])
-
+        photoPath = Path.Combine (currentPhotosDir, reader [3])
+        removalList.Add (reader [0]) if not System.IO.File.Exists (photoPath)
+ 
       # Now remove all the elements from the removal list
       for photoId as int in removalList:
         cmd = _connection.CreateCommand ()
@@ -79,6 +67,28 @@ static class Database ():
         cmd.Parameters.Add (p1)
 
         cmd.ExecuteNonQuery ()
+
+  def MovePhotosToNewLocation (newDir):
+    # FIXME Need some error handling in this function
+    if not System.IO.Directory.Exists (newDir):
+      raise ReplaceMeException ("Can't find target directory")
+
+    SyncToStorage ()
+    currentPhotosDir = Config.PhotosDirectory
+    cmd = _connection.CreateCommand ()
+    cmd.CommandText = ("SELECT * FROM photos ")
+
+    lock _locker:
+      reader = cmd.ExecuteReader ()
+
+      # Copy all the photos...
+      while reader.Read ():
+        oldPhotoPath = Path.Combine (currentPhotosDir, reader [3])
+        newPhotoPath = Path.Combine (newDir, reader [3])
+
+        subDir = System.IO.Path.GetDirectoryName (newPhotoPath)
+        System.IO.Directory.CreateDirectory (subDir) if not System.IO.Directory.Exists (subDir)
+        System.IO.File.Copy (oldPhotoPath, newPhotoPath, true)
 
   def HasLocation (location):
     cmd = _connection.CreateCommand ()
