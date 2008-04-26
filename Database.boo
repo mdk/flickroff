@@ -71,6 +71,8 @@ static class Database ():
         cmd.ExecuteNonQuery ()
 
   def MovePhotosToNewLocation (newDir):
+    Messenger.PushMessage ("Moving photo files to new location...")
+
     # FIXME Need some error handling in this function
     if not System.IO.Directory.Exists (newDir):
       raise ReplaceMeException ("Can't find target directory")
