@@ -138,6 +138,9 @@ static class SyncEngine ():
       _itemsList = []
       _workerException = null
 
+      # We can safely set the old sync dir here
+      Config.PreviousPhotosDirectory = Config.PhotosDirectory
+
       # Main logic
       FillPhotosetQueue ()
       ProcessPhotosetQueue ()
