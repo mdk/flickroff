@@ -88,7 +88,7 @@ static class Database ():
 
         subDir = System.IO.Path.GetDirectoryName (newPhotoPath)
         System.IO.Directory.CreateDirectory (subDir) if not System.IO.Directory.Exists (subDir)
-        System.IO.File.Copy (oldPhotoPath, newPhotoPath, true)
+        System.IO.File.Move (oldPhotoPath, newPhotoPath)
 
   def HasLocation (location):
     cmd = _connection.CreateCommand ()
