@@ -38,6 +38,12 @@ static class Config:
     get:
       return GetString ("photos_directory", _defaultPhotosDir)
 
+  PreviousPhotosDirectory as string:
+    set:
+      SetString ("previous_photos_directory", value)
+    get:
+      return GetString ("previous_photos_directory", _defaultPhotosDir)
+
   Token as string:
     set:
       SetString ("token", value)
