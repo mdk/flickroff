@@ -43,6 +43,8 @@ static class Database ():
   def SyncToStorage ():
     removalList = []
 
+    Messenger.PushMessage ("Looking at downloaded photos...")
+
     currentPhotosDir = Config.PhotosDirectory
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos ")
