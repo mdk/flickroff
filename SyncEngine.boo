@@ -54,7 +54,7 @@ static class SyncEngine ():
     _status = SyncStatus.Stopped
 
   def StartSync ():
-    _mainThread = Thread (DoSomething)
+    _mainThread = Thread (SyncThreadStart)
     _status = SyncStatus.InProgress
     _mainThread.Start ()
 
@@ -130,7 +130,7 @@ static class SyncEngine ():
     lock _locker:
       raise _workerException if _workerException
 
-  private def DoSomething ():
+  private def SyncThreadStart ():
     try:
       # Create the storage objects
       _photoSetQueue = Queue ()
