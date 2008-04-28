@@ -113,7 +113,7 @@ class Window (Gtk.Window):
     movePhotos = false
 
     if Config.PhotosDirectory != Config.PreviousPhotosDirectory:
-      moveQuestionDialog = MoveQuestionDialog (self)
+      moveQuestionDialog = CopyQuestionDialog (self)
       response = moveQuestionDialog.Run ()
       moveQuestionDialog.Destroy ()
       movePhotos = true if response == ResponseType.Yes

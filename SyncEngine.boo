@@ -143,7 +143,7 @@ static class SyncEngine ():
       # Check out our database
       Database.SyncToStorage ()
       lock _locker:
-        Database.MovePhotosToNewLocation (Config.PhotosDirectory) if _moveToNewLocation
+        Database.CopyPhotosToNewLocation (Config.PhotosDirectory) if _moveToNewLocation
 
       # We can safely set the old sync dir here
       Config.PreviousPhotosDirectory = Config.PhotosDirectory

@@ -25,13 +25,13 @@ namespace Flickroff
 import System
 import Gtk
 
-class MoveQuestionDialog (MessageDialog):
+class CopyQuestionDialog (MessageDialog):
 
   def constructor (window):
 
     # FIXME Move to static class part
     msg = ("It seems you already synced some photos to a different " +
-           "directory in the past. Would you like to move those old photos " +
+           "directory in the past. Would you like to copy those old photos " +
            "to the new location you just picked?\n\n" +
            "If you choose <b>no</b> a fresh sync will be started at the new location")
 

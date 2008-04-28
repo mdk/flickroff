@@ -70,8 +70,8 @@ static class Database ():
 
         cmd.ExecuteNonQuery ()
 
-  def MovePhotosToNewLocation (newDir):
-    Messenger.PushMessage ("Moving photo files to a new location...")
+  def CopyPhotosToNewLocation (newDir):
+    Messenger.PushMessage ("Copying photo files to a new location...")
 
     # FIXME Need some error handling in this function
     if not System.IO.Directory.Exists (newDir):
@@ -91,7 +91,7 @@ static class Database ():
 
         subDir = System.IO.Path.GetDirectoryName (newPhotoPath)
         System.IO.Directory.CreateDirectory (subDir) if not System.IO.Directory.Exists (subDir)
-        System.IO.File.Move (oldPhotoPath, newPhotoPath)
+        System.IO.File.Copy (oldPhotoPath, newPhotoPath, true)
 
   def HasLocation (location):
     cmd = _connection.CreateCommand ()
