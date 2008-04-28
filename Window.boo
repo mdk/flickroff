@@ -110,13 +110,17 @@ class Window (Gtk.Window):
   private def OnSynchronizeClicked ():
     ShowProgressBar ()
     _directoryChooser.Sensitive = false
-    movePhotos = false
+    copyPhotos = false
+    resetDb = false
 
     if Config.PhotosDirectory != Config.PreviousPhotosDirectory and Database.GetPhotoCount () > 0:
       moveQuestionDialog = CopyQuestionDialog (self)
       response = moveQuestionDialog.Run ()
       moveQuestionDialog.Destroy ()
-      movePhotos = true if response == ResponseType.Yes
+      if response == ResponseType.Yes:
+        copyPhotos = true
+      else:
+        resetDb = true
 
     if not FlickrStore.HasToken:
       authorizeDialog = AuthorizeDialog (self)
@@ -126,7 +130,7 @@ class Window (Gtk.Window):
       # FIXME Temporary
       FlickrStore.GetTokenForFrob (authorizeDialog.Frob)
     
-    SyncEngine.StartSync (movePhotos)
+    SyncEngine.StartSync (copyPhotos, resetDb)
 
   private def OnAbortClicked ():
     _abortButton.Sensitive = false;

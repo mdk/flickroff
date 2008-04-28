@@ -138,6 +138,12 @@ static class Database ():
       reader = cmd.ExecuteReader ()
       return reader.Read ()
 
+  def Reset ():
+    c = _connection.CreateCommand ()
+    c.CommandText = ("DELETE FROM photos")
+    lock _locker:
+      c.ExecuteNonQuery ()
+
   def AddPhoto (photo as DownloadItem):
     c = _connection.CreateCommand ()
     c.CommandText = ("INSERT INTO photos VALUES " +
