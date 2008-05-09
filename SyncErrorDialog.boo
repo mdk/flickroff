@@ -39,6 +39,8 @@ class SyncErrorDialog (MessageDialog):
 
     # Add an expander with some more information
     error = Label (exception.StackTrace)
+    error.Selectable = true;
+
     exp = Expander ("<b>Error details</b>")
     exp.UseMarkup = true
     exp.Add (error)

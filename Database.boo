@@ -24,7 +24,6 @@ namespace Flickroff
 
 import System
 import System.IO
-import System.Data
 import Mono.Data.SqliteClient;
 
 static class Database ():
