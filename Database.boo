@@ -60,10 +60,10 @@ static class Database ():
       for photoId as int in removalList:
         cmd = _connection.CreateCommand ()
         cmd.CommandText = ("DELETE FROM photos " +
-                           "WHERE id = @id")
+                           "WHERE id = :id")
 
         p1 = cmd.CreateParameter ()
-        p1.ParameterName = "@id"
+        p1.ParameterName = ":id"
         p1.Value = photoId
         cmd.Parameters.Add (p1)
 
@@ -95,10 +95,10 @@ static class Database ():
   def HasLocation (location):
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos " +
-                       "WHERE location = @location")
+                       "WHERE location = :location")
                       
     p1 = cmd.CreateParameter ()
-    p1.ParameterName = "@location"
+    p1.ParameterName = ":location"
     p1.Value = location
     cmd.Parameters.Add (p1)
 
@@ -120,16 +120,16 @@ static class Database ():
     # FIXME The parameter creation should be moved to separate helper funcs
     cmd = _connection.CreateCommand ()
     cmd.CommandText = ("SELECT * FROM photos " +
-                       "WHERE photoid = @photoid AND " +
-                       "setid = @setid")
+                       "WHERE photoid = :photoid AND " +
+                       "setid = :setid")
 
     p1 = cmd.CreateParameter ()
-    p1.ParameterName = "@photoid"
+    p1.ParameterName = ":photoid"
     p1.Value = photoid
     cmd.Parameters.Add (p1)
 
     p2 = cmd.CreateParameter ()
-    p2.ParameterName = "@setid"
+    p2.ParameterName = ":setid"
     p2.Value = setid
     cmd.Parameters.Add (p2)
 
@@ -146,20 +146,20 @@ static class Database ():
   def AddPhoto (photo as DownloadItem):
     c = _connection.CreateCommand ()
     c.CommandText = ("INSERT INTO photos VALUES " +
-                     "(null, @photoid, @setid, @location)")
+                     "(null, :photoid, :setid, :location)")
     
     p1 = c.CreateParameter ()
-    p1.ParameterName = "@photoid"
+    p1.ParameterName = ":photoid"
     p1.Value = photo.PhotoId
     c.Parameters.Add (p1)
 
     p2 = c.CreateParameter ()
-    p2.ParameterName = "@setid"
+    p2.ParameterName = ":setid"
     p2.Value = photo.PhotosetId
     c.Parameters.Add (p2)
 
     p3 = c.CreateParameter ()
-    p3.ParameterName = "@location"
+    p3.ParameterName = ":location"
     p3.Value = photo.ShortPath
     c.Parameters.Add (p3)
     
@@ -191,7 +191,7 @@ static class Database ():
       cmd.CommandText = "SELECT * FROM info"
       reader = cmd.ExecuteReader ()
       reader.Read ()
-      raise IncompatibleDatabaseException (reader [0]) if reader [0] != 1
+      raise IncompatibleDatabaseException (reader [0]) if reader [0] != '1'
       return true
     
     except e as IncompatibleDatabaseException:
