@@ -95,13 +95,13 @@ class DownloadItem ():
   def Download ():
     try:
       request = WebRequest.Create (_url)
-      request.Timeout = 10000
+      request.Timeout = 100000
       inputStream = request.GetResponse ().GetResponseStream ()
       outputStream = File.Create (FullPath)
-      buf = array (byte, 2048)
+      buf = array (byte, 1024)
       c = 0
 
-      while ((c = inputStream.Read (buf, 0, 2048)) != 0):
+      while ((c = inputStream.Read (buf, 0, 1024)) != 0):
         outputStream.Write (buf, 0, c)
 
       inputStream.Close ()
